@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang=ja><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=icon href=/favicon.ico><title>www</title><script>window.$data = {};
+      window.$data.articles = [{"path":"/article/test.md","Title":"Test !!","Date":"2020-07-05","Tags":["BBB","AAA"]},{"path":"/article/test2.md","Title":"Test 2","Date":"2020-07-07","Tags":["test","foobar"]}];
+
+      window.addEventListener('DOMContentLoaded', () => {
+        console.log('aa');
+        console.log(window.location.search);
+        console.log('bb');
+        if (window.location.search.startsWith('?')) {
+          history.replaceState(undefined, '', window.location.search.substr(1));
+          dispatchEvent(new PopStateEvent({}));
+        }
+      }, { once: true});</script><link href=/css/index.7d353cab.css rel=preload as=style><link href=/js/chunk-vendors.b291e537.js rel=preload as=script><link href=/js/index.f051d848.js rel=preload as=script><link href=/css/index.7d353cab.css rel=stylesheet></head><body><noscript><strong>We're sorry but www doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=/js/chunk-vendors.b291e537.js></script><script src=/js/index.f051d848.js></script></body></html>
