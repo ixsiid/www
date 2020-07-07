@@ -2,9 +2,9 @@
   <div id="app">
     <a href="/"><img alt="Vue logo" src="./assets/logo.png" /></a>
     <ul>
-      <li><a onclick="window._move('/activity');">Activity</a></li>
-      <li><a onclick="window._move('/blog');">Blog</a></li>
-      <li><a onclick="window._move('/contact');">Contact</a></li>
+      <li><a onclick="window._move('?activity');">Activity</a></li>
+      <li><a onclick="window._move('?blog');">Blog</a></li>
+      <li><a onclick="window._move('?contact');">Contact</a></li>
     </ul>
     <HelloWorld v-if="view == 'top'" msg="Welcome to Your Vue.js App" />
     <Article v-else-if="view == 'blog'" :src="articlePath" />
@@ -35,9 +35,10 @@ export default {
       window.addEventListener(
         "popstate",
         () => {
-          const [view, ...query] = (window.location.pathname + (window.location.search ? '/' + window.location.search.substr(1) : ''))
+          const [[,..._view], ...query] = window.location.search
             .split("/")
             .filter(x => x);
+          const view = _view.join('');
 
           console.log(view);
           console.log(query);

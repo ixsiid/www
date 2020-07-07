@@ -10,12 +10,6 @@
   <script>
     window.$data = {};
     window.$data.articles = <%= htmlWebpackPlugin.options.articles %>;
-
-    window.addEventListener('DOMContentLoaded', () => {
-      if (window.location.search) {
-        history.replaceState({}, '', window.location.pathname + '/' + window.location.search.substr(1));
-      }
-    }, { once: true });
   </script>
 </head>
 
