@@ -35,7 +35,7 @@ export default {
       window.addEventListener(
         "popstate",
         () => {
-          const [view, ...query] = window.location.pathname
+          const [view, ...query] = (window.location.pathname + (window.location.search ? '/' + window.location.search.substr(1) : ''))
             .split("/")
             .filter(x => x);
 
