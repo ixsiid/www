@@ -1,6 +1,10 @@
 <template>
   <div class="article">
-    <VueMarkdown :source="article" />
+    <VueMarkdown v-if="src" :source="article" />
+    <ul v-else>
+      <li><a onclick="window._move('/blog/test.md');">1</a></li>
+      <li><a onclick="window._move('/blog/test2.md');">2</a></li>
+    </ul>
   </div>
 </template>
 
@@ -17,7 +21,7 @@ export default {
   },
   data: function() {
     return {
-      article: "# Hello world !???!!!"
+      article: ""
     };
   },
   watch: {

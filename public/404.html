@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title>Redirect</title>
+    <script>
+	    const meta = document.createElement('meta');
+	    meta.setAttribute('http-equiv', 'refresh');
+	    meta.setAttribute('content', `0;URL='/?${window.location.pathname.replace(/^\/404.html/, '')}`);
+	    document.head.appendChild(meta);
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
