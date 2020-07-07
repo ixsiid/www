@@ -38,6 +38,9 @@ export default {
           const [view, ...query] = window.location.pathname
             .split("/")
             .filter(x => x);
+
+          console.log(view);
+          console.log(query);
           if (view) {
             this.view = view;
 
