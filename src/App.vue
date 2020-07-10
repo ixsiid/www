@@ -24,13 +24,15 @@
       <li><a onclick="window._move('?contact');">Contact</a></li>
     </ul>
 
+    <div v-if="view == 'top'">
     <News src="/news.md" />
-    <HelloWorld v-if="view == 'top'" msg="Welcome to Your Vue.js App" />
-    <HelloWorld v-if="view == 'top'" msg="Welcome to Your Vue.js App" />
-    <HelloWorld v-if="view == 'top'" msg="Welcome to Your Vue.js App" />
-    <HelloWorld v-if="view == 'top'" msg="Welcome to Your Vue.js App" />
-    <HelloWorld v-if="view == 'top'" msg="Welcome to Your Vue.js App" />
-    <HelloWorld v-if="view == 'top'" msg="Welcome to Your Vue.js App" />
+    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <HelloWorld msg="Welcome to Your Vue.js App" />
+    </div>
     <Article v-else-if="view == 'blog'" :src="articlePath" />
     <Error v-else message="Not found" />
 
