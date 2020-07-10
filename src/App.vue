@@ -1,6 +1,23 @@
 <template>
   <div id="app">
-    <div id="logo"><a href="/"><img alt="Vue logo" src="./assets/logo.png" /></a></div>
+    <div id="title">
+      <a id="logoA" href="/">
+<svg xmlns="http://www.w3.org/2000/svg"
+   id="logo"
+   width="150px"
+   height="132px"
+   viewBox="0 0 150 132">
+   <g stroke="none">
+      <path class="color fill" fill="#ffcd40" d="M 38.688268,3.157247 71.31324,48.25672 2.624966,127.63577 Z"/>
+      <path class="color fill" fill="#93b6dd" d="M 79.86586,52.26577 9.841245,128.70485 147.48505,57.34389 Z"/>
+      <path class="color fill" fill="#f0b4d3" d="M 117.01632,82.19995 95.63476,130.843 21.333833,129.23938 Z"/>
+   </g>
+</svg></a>
+      <p style="overflow-x: hidden">
+        <label><input type="checkbox" id="colorEdit" />
+      hogehogehohgoeho fogalkj hofaoji hofaewjo hoifewa </label>
+      </p>
+    </div>
     <ul id="navi">
       <li><a onclick="window._move('?activity');">Activity</a></li>
       <li><a onclick="window._move('?blog');">Blog</a></li>
@@ -71,23 +88,83 @@ export default {
       const s = {};
       window.addEventListener('load', () => {
         s.target = document.querySelector('#navi');
-        s.top = document.querySelector('#logo').getClientRects()[0].height;
+        s.top = document.querySelector('#title').getClientRects()[0].height;
         s.height = document.querySelector('#navi').getClientRects()[0].height;
 
-        logoResize();
+        titleResize();
       }, {once: true, passive: true});
 
-      const logoResize = () => {
+      const titleResize = () => {
         if (!s.target) return;
         const current = s.target.getClientRects()[0].top;
-        console.log(`Change: ${s.top} -> ${current} : ${current / s.top}`);
+
         const aw = document.body.clientWidth;
-        document.querySelector('#logo').style.width = (aw * ((s.top - s.height) * (current / s.top) + s.height) / s.top) + 'px';
+        const rate = ((s.top - s.height) * (current / s.top) + s.height) / s.top;
+
+        const current_width = document.querySelector('#title').getClientRects()[0].width + 'px';
+        const target_width = (aw * rate) + 'px';
+
+        const target = document.querySelector('#title');
+        target.animate([
+          { width: current_width },
+          { width: target_width }
+        ], {duration: 40, iterations: 1});
+        target.style.width = target_width;
       };
 
-      window.addEventListener('scroll', logoResize, {once: false, passive: true});
-      window.addEventListener('resize', logoResize, {once: false, passive: true});
+      window.addEventListener('scroll', titleResize, {once: false, passive: true});
+      window.addEventListener('resize', titleResize, {once: false, passive: true});
 
+      const colorPicker = document.createElement('input');
+      colorPicker.setAttribute('type', 'color');
+      colorPicker.style.position = 'absolute';
+      colorPicker.style.top = '0px';
+      colorPicker.style.left = '0px';
+      colorPicker.style.zIndex = '200';
+      colorPicker.style.display = 'none';
+      colorPicker.target = undefined;
+
+      colorPicker.addEventListener('input', () => {
+        if (!colorPicker.target) return;
+
+        [].filter.call(colorPicker.target.classList, x => ['fill', 'stroke'].indexOf(x) >= 0)
+                 .forEach(attr => colorPicker.target.setAttribute(attr, colorPicker.value));
+      }, {once: false, passive: true});
+
+      colorPicker.addEventListener('blur', () => {
+        colorPicker.style.display = 'none';
+        console.log('blur');
+      }, {once: false, passive: true});
+
+      colorPicker.addEventListener('change', () => {
+        colorPicker.style.display = 'none';
+        console.log('change');
+      }, {once: false, passive: true});
+      
+      document.body.appendChild(colorPicker);
+
+      document.querySelectorAll('.color').forEach(element => {
+        element.addEventListener('click', mouseEvent => {
+          if(!document.querySelector('#colorEdit').checked) return;
+
+          colorPicker.target = element;
+          colorPicker.style.top = mouseEvent.pageY + 20 + 'px';
+          colorPicker.style.left = mouseEvent.pageX + 20 + 'px';
+          colorPicker.style.display = 'block';
+          colorPicker.value = element.getAttribute('fill') || element.getAttribute('stroke');
+          colorPicker.focus();
+          setTimeout(() => colorPicker.click(), 10);
+        }, {once: false, passive: true});
+      });
+
+      document.querySelector('#colorEdit').addEventListener('change', event => {
+        const a = document.querySelector('#logoA');
+        if (event.target.checked) {
+          a.removeAttribute('href');
+        } else {
+          a.setAttribute('href', '/');
+        }
+      }, {once: false, passive: true});
     }
 
     dispatchEvent(new PopStateEvent("popstate", {}));
@@ -108,11 +185,16 @@ body {
   margin: 0;
 }
 
-#logo {
+#title {
   z-index: 100;
+  overflow-x: hidden;
 }
 
-#logo, #navi {
+#title, #navi {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   padding: 0;
   margin: 0;
   position: sticky;
@@ -123,17 +205,11 @@ body {
   background-color: #e5e5e5;
 }
 
-#navi, #navi li {
-  padding: 1em 0;
-}
-
 #navi li {
-  display: inline;
   list-style-type: none;
   font-weight: bold;
 
   margin: 0 5ex;
+  padding: 1em 0;
 }
-
-
 </style>
