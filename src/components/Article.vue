@@ -1,11 +1,14 @@
 <template>
   <div class="article">
     <VueMarkdown v-if="src" :source="article" />
-    <ul v-else>
-      <li v-for="item in list" :key="item.path">
-        <a :onclick="'window._move(`' + item.path.replace(/^\/article\//, '/?blog/') + '`);'">{{item.path}}</a>
-      </li>
-    </ul>
+    <div id="article_list" v-else>
+      <ul>
+        <li v-for="item in list" :key="item.path">
+          <p><a :onclick="'window._move(`' + item.path.replace(/^\/article\//, '/?blog/') + '`);'">{{item.Title}}</a></p>
+          <p><span>{{item.Date}}</span></p>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -43,15 +46,30 @@ export default {
 h3 {
   margin: 40px 0 0;
 }
-ul {
+#article_list ul {
   list-style-type: none;
   padding: 0;
+  max-width: 40em;
+  margin: 1em auto;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+#article_list li {
+  padding: 0.8em;
 }
-a {
-  color: #42b983;
+#article_list li + li {
+  border-top: solid 1px #e5e5e5;
+}
+#article_list p {
+  margin: 0.5ex;
+}
+#article_list a {
+  font-size: 120%;
+  font-weight: bold;
+  color: #111;
+  cursor: pointer;
+}
+#article_list span {
+  font-size: 90%;
+  font-weight: bold;
+  color: #aaa;
 }
 </style>

@@ -2,20 +2,20 @@
   <div id="app">
     <div id="title">
       <a id="logoA" href="/">
-<svg xmlns="http://www.w3.org/2000/svg"
-   id="logo"
-   width="150px"
-   height="132px"
-   viewBox="0 0 150 132">
-   <g stroke="none">
-      <path class="color fill" fill="#ffcd40" d="M 38.688268,3.157247 71.31324,48.25672 2.624966,127.63577 Z"/>
-      <path class="color fill" fill="#93b6dd" d="M 79.86586,52.26577 9.841245,128.70485 147.48505,57.34389 Z"/>
-      <path class="color fill" fill="#f0b4d3" d="M 117.01632,82.19995 95.63476,130.843 21.333833,129.23938 Z"/>
-   </g>
-</svg></a>
+        <svg xmlns="http://www.w3.org/2000/svg"
+          id="logo"
+          width="150px"
+          height="132px"
+          viewBox="0 0 150 132">
+          <g stroke="none">
+              <path class="color fill" fill="#ffcd40" d="M 38.688268,3.157247 71.31324,48.25672 2.624966,127.63577 Z"/>
+              <path class="color fill" fill="#93b6dd" d="M 79.86586,52.26577 9.841245,128.70485 147.48505,57.34389 Z"/>
+              <path class="color fill" fill="#f0b4d3" d="M 117.01632,82.19995 95.63476,130.843 21.333833,129.23938 Z"/>
+          </g>
+        </svg>
+      </a>
       <p style="overflow-x: hidden">
-        <label><input type="checkbox" id="colorEdit" />
-      hogehogehohgoeho fogalkj hofaoji hofaewjo hoifewa </label>
+        <label><input type="checkbox" id="colorEdit" />Edit</label>
       </p>
     </div>
     <ul id="navi">
@@ -202,14 +202,23 @@ body {
 }
 
 #navi {
-  background-color: #e5e5e5;
+  background-color: #93b6dd;
+  color: #333;
+  box-shadow: 0 2px 6px 0 #58a;
+}
+
+#navi li:hover {
+  color: #000;
 }
 
 #navi li {
   list-style-type: none;
   font-weight: bold;
+  text-transform: uppercase;
 
-  margin: 0 5ex;
-  padding: 1em 0;
+  margin: 0.7em 5ex;
+  padding: 0.3em 0;
+
+  cursor: pointer;
 }
 </style>
