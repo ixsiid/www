@@ -2,8 +2,9 @@
   <div class="article">
     <VueMarkdown v-if="src" :source="article" />
     <ul v-else>
-      <li><a onclick="window._move('?blog/test.md');">1</a></li>
-      <li><a onclick="window._move('?blog/test2.md');">2</a></li>
+      <li v-for="item in list" :key="item.path">
+        <a :onclick="'window._move(`' + item.path.replace(/^\/article\//, '/?blog/') + '`);'">{{item.path}}</a>
+      </li>
     </ul>
   </div>
 </template>
@@ -12,18 +13,17 @@
 import VueMarkdown from "vue-markdown";
 
 export default {
-  name: "Article",
+  name: 'Article',
   props: {
     src: String
   },
   components: {
     VueMarkdown
   },
-  data: function() {
-    return {
-      article: ""
-    };
-  },
+  data: () => ({
+    article: "",
+    list: window.$data.articles,
+  }),
   watch: {
     src: {
       immediate: true,
