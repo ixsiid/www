@@ -23,6 +23,8 @@
       <li><a onclick="window._move('?blog');">Blog</a></li>
       <li><a onclick="window._move('?contact');">Contact</a></li>
     </ul>
+
+    <News src="/news.md" />
     <HelloWorld v-if="view == 'top'" msg="Welcome to Your Vue.js App" />
     <HelloWorld v-if="view == 'top'" msg="Welcome to Your Vue.js App" />
     <HelloWorld v-if="view == 'top'" msg="Welcome to Your Vue.js App" />
@@ -31,6 +33,7 @@
     <HelloWorld v-if="view == 'top'" msg="Welcome to Your Vue.js App" />
     <Article v-else-if="view == 'blog'" :src="articlePath" />
     <Error v-else message="Not found" />
+
   </div>
 </template>
 
@@ -38,10 +41,12 @@
 import HelloWorld from "./components/HelloWorld.vue";
 import Article from "./components/Article.vue";
 import Error from "./components/Error.vue";
+import News from './components/News.vue';
 
 export default {
   name: "App",
   components: {
+    News,
     HelloWorld,
     Article,
     Error
@@ -201,10 +206,15 @@ body {
   top: 0;
 }
 
+#logoA {
+  filter: drop-shadow(2px 2px 3px #444);
+}
+
 #navi {
   background-color: #93b6dd;
   color: #333;
-  box-shadow: 0 2px 6px 0 #58a;
+  box-shadow: 0 2px 6px 0 #82b2ef;
+  margin-bottom: 5.5em;
 }
 
 #navi li:hover {
