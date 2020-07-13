@@ -33,6 +33,7 @@ module.exports = {
 	pages: {
 		index: {
 			entry: 'src/main.js',
+			title: 'Halzion.net',
 
 			articles: JSON.stringify(articles),
 		}
