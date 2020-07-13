@@ -1,24 +1,28 @@
 <template>
   <div class="news-container">
-    <div class="news" v-for="(item, index) in items" :key="`news_` + index">
-      <VueMarkdown :source="item" />
+    <div class="news" v-for="(item, index) in news" :key="`_news_` + index">
+      <div class="date">
+        <p>
+          <span>{{item.date}}</span>
+        </p>
+      </div>
+      <h1>{{item.title}}</h1>
+      <p>{{item.description}}</p>
     </div>
   </div>
 </template>
 
 <script>
-import VueMarkdown from "vue-markdown";
+import news from "../assets/news.js";
 
 export default {
   name: "News",
   props: {
     src: String
   },
-  components: {
-    VueMarkdown
-  },
   data: () => ({
-    items: []
+    items: [],
+    news
   }),
   mounted: function() {
     fetch(this.src)
@@ -52,6 +56,33 @@ export default {
   box-shadow: 3px 3px 7px 0px #ccc;
 }
 
+.date {
+  position: relative;
+  left: -1em;
+  top: -1em;
+}
+
+.date p {
+  position: absolute;
+  width: 20em;
+  height: 10.3em;
+  margin: 0;
+  overflow: hidden;
+  color: #f3f3f3;
+  z-index: -10;
+  direction: rtl;
+  white-space: nowrap;
+}
+
+.date span {
+  font-size: 3.8em;
+}
+
+h1 {
+  text-align: left;
+  margin: 0.15em;
+}
+
 @media screen and (max-width: 60em) {
   .news {
     margin: 0;
@@ -68,6 +99,29 @@ export default {
 
   .news-container {
     margin: 0em 1em;
+    text-align: left;
+  }
+
+  .news h1 {
+    display: inline;
+  }
+
+  .date {
+    display: inline;
+    position: static;
+  }
+
+  .date p {
+    display: inline;
+    position: static;
+    margin: 0 1em;
+    overflow: auto;
+    color: #888;
+    z-index: 0;
+  }
+
+  .date span {
+    font-size: 1em;
   }
 }
 </style>

@@ -324,7 +324,7 @@ body {
   font-weight: bold;
   text-transform: uppercase;
 
-  margin: 0.7em 5ex;
+  margin: 0.7em 2.3ex;
   padding: 0.3em 0;
 
   cursor: pointer;
