@@ -21,8 +21,7 @@ export default {
     src: String
   },
   data: () => ({
-    items: [],
-    news
+    news,
   }),
   mounted: function() {
     fetch(this.src)
