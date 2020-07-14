@@ -56,7 +56,7 @@ export default {
     };
   },
   methods: {
-    saveLogo: function () {
+    saveLogo: function() {
       this.$refs.logo.save();
     },
 
@@ -118,10 +118,9 @@ export default {
       this.scrollParam.svg.target.style.height =
         rate_h * this.scrollParam.svg.height + "px";
 
-      document.querySelector("#title_info").style.opacity = Math.max(
-        (rate - 0.8) * 5,
-        0
-      );
+      const opacity = Math.max((rate - 0.8) * 5, 0);
+      document.querySelector("#title_info").style.opacity = opacity;
+      document.querySelector('#title_info').style.pointerEvents = opacity > 0.2 ? 'auto' : 'none';
     }
   },
   mounted: function() {
@@ -230,6 +229,18 @@ body {
 #title_message {
   font-family: "Baloo Tamma 2", cursive;
   font-size: 200%;
+}
+
+#title_info {
+  display: flex;
+  flex-direction: column;
+}
+
+#title_message {
+  flex: 1;
+
+  display: flex;
+  align-items: center;
 }
 
 #title_info input {
