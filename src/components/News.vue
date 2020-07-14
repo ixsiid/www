@@ -49,10 +49,16 @@ export default {
 <style scoped>
 .news-container {
   margin: 0em 4.5em;
+
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
 }
 
 .news {
-  display: inline-block;
+  display: block;
   overflow: hidden;
   width: 18em;
   height: 8.3em;

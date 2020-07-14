@@ -29,6 +29,7 @@
     <News v-if="view == 'top'" src="/news.md" />
     <Activity v-else-if="view == 'activity'" src="/activity/index.md" />
     <Article v-else-if="view == 'blog'" :src="articlePath" />
+    <Contact v-else-if="view == 'contact'" />
     <Error v-else message="Not found" />
   </div>
 </template>
@@ -39,10 +40,12 @@ import Error from "./components/Error.vue";
 import News from "./components/News.vue";
 import Icon from "./components/Icon.vue";
 import Activity from './components/Activity.vue';
+import Contact from './components/Contact.vue';
 
 export default {
   name: "App",
   components: {
+    Contact,
     Activity,
     Icon,
     News,
