@@ -27,6 +27,7 @@
     </ul>
 
     <News v-if="view == 'top'" src="/news.md" />
+    <Activity v-else-if="view == 'activity'" src="/activity/index.md" />
     <Article v-else-if="view == 'blog'" :src="articlePath" />
     <Error v-else message="Not found" />
   </div>
@@ -37,10 +38,12 @@ import Article from "./components/Article.vue";
 import Error from "./components/Error.vue";
 import News from "./components/News.vue";
 import Icon from "./components/Icon.vue";
+import Activity from './components/Activity.vue';
 
 export default {
   name: "App",
   components: {
+    Activity,
     Icon,
     News,
     Article,
@@ -120,7 +123,7 @@ export default {
 
       const opacity = Math.max((rate - 0.8) * 5, 0);
       document.querySelector("#title_info").style.opacity = opacity;
-      document.querySelector('#title_info').style.pointerEvents = opacity > 0.2 ? 'auto' : 'none';
+      document.querySelector('#title').style.pointerEvents = opacity > 0.6 ? 'auto' : 'none';
     }
   },
   mounted: function() {
