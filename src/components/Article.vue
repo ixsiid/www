@@ -4,7 +4,7 @@
     <div id="article_list" v-else>
       <ul>
         <li v-for="item in list" :key="item.path">
-          <p><a :onclick="'window._move(`' + item.path.replace(/^\/article\//, '/?blog/') + '`);'">{{item.Title}}</a></p>
+          <p><a v-on:click="$go(item.path.replace(/^\/article\//, '/?blog/'))">{{item.Title}}</a></p>
           <p><span>{{item.Date}}</span></p>
         </li>
       </ul>

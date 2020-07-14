@@ -27,13 +27,13 @@
     </div>
     <ul id="navi">
       <li>
-        <a onclick="window._move('?activity');">Activity</a>
+        <a v-on:click="$go('?activity')">Activity</a>
       </li>
       <li>
-        <a onclick="window._move('?blog');">Blog</a>
+        <a v-on:click="$go('?blog');">Blog</a>
       </li>
       <li>
-        <a onclick="window._move('?contact');">Contact</a>
+        <a v-on:click="$go('?contact');">Contact</a>
       </li>
     </ul>
 
@@ -99,39 +99,16 @@ export default {
     }
   },
   mounted: function() {
+    this.$queryCallback.push((view, query) => {
+      this.view = view || "top";
+      if (view === "blog") {
+        console.log(query.length);
+        this.articlePath =
+          query.length == 0 ? "" : `/article/${query.join("/")}`;
+      }
+    });
+
     if (!window._move) {
-      window.addEventListener(
-        "popstate",
-        () => {
-          const [view, ...query] = window.location.search
-            .split("/")
-            .map((x, i) => (i == 0 ? x.substr(1) : x))
-            .filter(x => x);
-
-          if (view) {
-            this.view = view;
-
-            if (view == "blog") {
-              if (query.length > 0)
-                this.articlePath = `/article/${query.join("/")}`;
-              else this.articlePath = "";
-            }
-          } else {
-            this.view = "top";
-          }
-        },
-        { once: false, passive: true }
-      );
-
-      Object.defineProperty(window, "_move", {
-        enumerable: false,
-        writable: false,
-        value: (url, title = "", state = undefined) => {
-          history.pushState(state, title, url);
-          dispatchEvent(new PopStateEvent("popstate", {}));
-        }
-      });
-
       const s = {};
       window.addEventListener(
         "load",
@@ -139,8 +116,10 @@ export default {
           s.target = document.querySelector("#navi");
           s.top = document.querySelector("#title").getClientRects()[0].height;
           s.height = document.querySelector("#navi").getClientRects()[0].height;
-          
-          s.offsetX = document.querySelector('#title_info').getClientRects()[0].width;
+
+          s.offsetX = document
+            .querySelector("#title_info")
+            .getClientRects()[0].width;
 
           s.svg = {};
           s.svg.target = document.querySelector("#logo");
@@ -167,7 +146,8 @@ export default {
 
         const current_width =
           document.querySelector("#title").getClientRects()[0].width + "px";
-        const target_width = Math.min(document.body.clientWidth, aw * rate + s.offsetX) + "px";
+        const target_width =
+          Math.min(document.body.clientWidth, aw * rate + s.offsetX) + "px";
 
         const target = document.querySelector("#title");
         target.animate([{ width: current_width }, { width: target_width }], {
@@ -371,7 +351,8 @@ body {
     margin: 1em 0;
   }
 
-  #title_info label, #title_info button {
+  #title_info label,
+  #title_info button {
     display: none;
   }
 }
@@ -387,7 +368,8 @@ body {
     margin: 1em 0;
   }
 
-  #title_info label, #title_info button {
+  #title_info label,
+  #title_info button {
     display: none;
   }
 }
