@@ -53,14 +53,7 @@
       mask="url(#outer_orbit)"
       class="color"
     />
-    <circle
-      fill="#3d85c6"
-      cx="0"
-      cy="0"
-      r="145"
-      mask="url(#inner_orbit)"
-      class="color"
-    />
+    <circle fill="#3d85c6" cx="0" cy="0" r="145" mask="url(#inner_orbit)" class="color" />
     <g fill="#3d85c6">
       <circle transform="rotate(0)" cx="0" cy="-133.8" r="22.8" class="color" />
       <circle transform="rotate(72)" cx="0" cy="-133.8" r="22.8" class="color" />
@@ -88,8 +81,102 @@
 <script>
 export default {
   name: "Icon",
+  props: {
+    colorChangeable: Boolean
+  },
   data: () => ({}),
-  mounted: function() {}
+  mounted: function() {
+    const colorPicker = document.createElement("input");
+    colorPicker.setAttribute("type", "color");
+    colorPicker.style.position = "absolute";
+    colorPicker.style.top = "0px";
+    colorPicker.style.left = "0px";
+    colorPicker.style.zIndex = "200";
+    colorPicker.style.display = "none";
+    colorPicker.target = undefined;
+
+    colorPicker.addEventListener(
+      "input",
+      () => {
+        if (!colorPicker.target) return;
+
+        colorPicker.target.setAttribute("fill", colorPicker.value);
+      },
+      { once: false, passive: true }
+    );
+
+    colorPicker.addEventListener(
+      "blur",
+      () => {
+        colorPicker.style.display = "none";
+      },
+      { once: false, passive: true }
+    );
+
+    colorPicker.addEventListener(
+      "change",
+      () => {
+        colorPicker.style.display = "none";
+      },
+      { once: false, passive: true }
+    );
+
+    document.body.appendChild(colorPicker);
+
+    document.querySelectorAll(".color").forEach(element => {
+      element.addEventListener(
+        "click",
+        mouseEvent => {
+          if (!this.colorChangeable) return;
+
+          colorPicker.target = element;
+          colorPicker.style.top = mouseEvent.pageY + 20 + "px";
+          colorPicker.style.left = mouseEvent.pageX + 20 + "px";
+          colorPicker.style.display = "block";
+          colorPicker.value =
+            element.getAttribute("fill") ||
+            element.parentElement.getAttribute("fill") ||
+            element.parentElement.parentElement.getAttribute("fill");
+          colorPicker.focus();
+          setTimeout(() => colorPicker.click(), 10);
+        },
+        { once: false, passive: true }
+      );
+    });
+  },
+  methods: {
+    save: function() {
+      const canvas = document.createElement("canvas");
+      canvas.setAttribute("width", 512);
+      canvas.setAttribute("height", 512);
+      const context = canvas.getContext("2d");
+
+      const a = document.createElement("a");
+
+      const image = new Image();
+      image.addEventListener(
+        "load",
+        () => {
+          context.drawImage(image, 0, 0);
+          a.setAttribute("href", canvas.toDataURL("image/png"));
+          a.setAttribute("download", "halzion.png");
+          a.click();
+        },
+        { once: true }
+      );
+      image.setAttribute(
+        "src",
+        "data:image/svg+xml;charset=utf-8;base64," +
+          btoa(
+            unescape(
+              encodeURIComponent(
+                new XMLSerializer().serializeToString(this.$el)
+              )
+            )
+          )
+      );
+    }
+  }
 };
 </script>
 

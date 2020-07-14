@@ -1,27 +1,16 @@
 <template>
   <div id="app">
     <div id="title">
-      <a id="logoA" href="/">
-        <Icon id="logo" />
-        <!--svg xmlns="http://www.w3.org/2000/svg"
-          id="logo"
-          width="150px"
-          height="132px"
-          viewBox="0 0 150 132">
-          <g stroke="none">
-              <path class="color fill" fill="#ffcd40" d="M 38.688268,3.157247 71.31324,48.25672 2.624966,127.63577 Z"/>
-              <path class="color fill" fill="#93b6dd" d="M 79.86586,52.26577 9.841245,128.70485 147.48505,57.34389 Z"/>
-              <path class="color fill" fill="#f0b4d3" d="M 117.01632,82.19995 95.63476,130.843 21.333833,129.23938 Z"/>
-          </g>
-        </svg-->
+      <a id="logoA" :href="isColorEdit ? undefined : '/'">
+        <Icon id="logo" :colorChangeable="isColorEdit" ref="logo" />
       </a>
       <div id="title_info">
         <p id="title_message">Halzion.net</p>
         <p>
           <label>
-            <input type="checkbox" id="colorEdit" />Edit
+            <input type="checkbox" id="colorEdit" v-model="isColorEdit" />Edit
           </label>
-          <button v-on:click="save_logo">Save</button>
+          <button v-on:click="saveLogo">Save</button>
         </p>
       </div>
     </div>
@@ -60,41 +49,78 @@ export default {
   data: function() {
     return {
       view: "top",
-      articlePath: ""
+      articlePath: "",
+      isColorEdit: false,
+
+      scrollParam: {}
     };
   },
   methods: {
-    save_logo: () => {
-      const canvas = document.createElement("canvas");
-      canvas.setAttribute("width", 512);
-      canvas.setAttribute("height", 512);
-      const context = canvas.getContext("2d");
+    saveLogo: function () {
+      this.$refs.logo.save();
+    },
 
-      const a = document.createElement("a");
+    windowLoad: function() {
+      this.scrollParam.target = document.querySelector("#navi");
+      this.scrollParam.top = document
+        .querySelector("#title")
+        .getClientRects()[0].height;
+      this.scrollParam.height = document
+        .querySelector("#navi")
+        .getClientRects()[0].height;
 
-      const image = new Image();
-      image.addEventListener(
-        "load",
-        () => {
-          context.drawImage(image, 0, 0);
-          a.setAttribute("href", canvas.toDataURL("image/png"));
-          a.setAttribute("download", "logo.png");
-          a.click();
-        },
-        { once: true }
-      );
-      image.setAttribute(
-        "src",
-        "data:image/svg+xml;charset=utf-8;base64," +
-          btoa(
-            unescape(
-              encodeURIComponent(
-                new XMLSerializer().serializeToString(
-                  document.querySelector("#logo")
-                )
-              )
-            )
-          )
+      this.scrollParam.offsetX = document
+        .querySelector("#title_info")
+        .getClientRects()[0].width;
+
+      this.scrollParam.svg = {};
+      this.scrollParam.svg.target = document.querySelector("#logo");
+      const rect = this.scrollParam.svg.target.getClientRects()[0];
+      this.scrollParam.svg.width = rect.width;
+      this.scrollParam.svg.height = rect.height;
+
+      document.querySelector("#title").style.height =
+        this.scrollParam.top + "px";
+
+      this.titleResize();
+    },
+
+    titleResize: function() {
+      if (!this.scrollParam.target) return;
+      const current = this.scrollParam.target.getClientRects()[0].top;
+
+      const aw = document.body.clientWidth;
+      const rate_h =
+        ((this.scrollParam.top - this.scrollParam.height) *
+          (current / this.scrollParam.top) +
+          this.scrollParam.height) /
+        this.scrollParam.top;
+      const rate_w = 1 - (1 - current / this.scrollParam.top) * (1 - 160 / aw);
+      const rate = Math.min(rate_h, rate_w);
+
+      const current_width =
+        document.querySelector("#title").getClientRects()[0].width + "px";
+      const target_width =
+        Math.min(
+          document.body.clientWidth,
+          aw * rate + this.scrollParam.offsetX
+        ) + "px";
+
+      const target = document.querySelector("#title");
+      target.animate([{ width: current_width }, { width: target_width }], {
+        duration: 40,
+        iterations: 1
+      });
+      target.style.width = target_width;
+
+      this.scrollParam.svg.target.style.width =
+        rate_h * this.scrollParam.svg.width + "px";
+      this.scrollParam.svg.target.style.height =
+        rate_h * this.scrollParam.svg.height + "px";
+
+      document.querySelector("#title_info").style.opacity = Math.max(
+        (rate - 0.8) * 5,
+        0
       );
     }
   },
@@ -102,153 +128,39 @@ export default {
     this.$queryCallback.push((view, query) => {
       this.view = view || "top";
       if (view === "blog") {
-        console.log(query.length);
         this.articlePath =
           query.length == 0 ? "" : `/article/${query.join("/")}`;
       }
     });
 
-    if (!window._move) {
-      const s = {};
-      window.addEventListener(
-        "load",
-        () => {
-          s.target = document.querySelector("#navi");
-          s.top = document.querySelector("#title").getClientRects()[0].height;
-          s.height = document.querySelector("#navi").getClientRects()[0].height;
-
-          s.offsetX = document
-            .querySelector("#title_info")
-            .getClientRects()[0].width;
-
-          s.svg = {};
-          s.svg.target = document.querySelector("#logo");
-          s.svg.rect = s.svg.target.getClientRects()[0];
-          s.svg.width = s.svg.rect.width;
-          s.svg.height = s.svg.rect.height;
-
-          document.querySelector("#title").style.height = s.top + "px";
-
-          titleResize();
-        },
-        { once: true, passive: true }
-      );
-
-      const titleResize = () => {
-        if (!s.target) return;
-        const current = s.target.getClientRects()[0].top;
-
-        const aw = document.body.clientWidth;
-        const rate_h =
-          ((s.top - s.height) * (current / s.top) + s.height) / s.top;
-        const rate_w = 1 - (1 - current / s.top) * (1 - 160 / aw);
-        const rate = Math.min(rate_h, rate_w);
-
-        const current_width =
-          document.querySelector("#title").getClientRects()[0].width + "px";
-        const target_width =
-          Math.min(document.body.clientWidth, aw * rate + s.offsetX) + "px";
-
-        const target = document.querySelector("#title");
-        target.animate([{ width: current_width }, { width: target_width }], {
-          duration: 40,
-          iterations: 1
-        });
-        target.style.width = target_width;
-
-        s.svg.target.style.width = rate_h * s.svg.width + "px";
-        s.svg.target.style.height = rate_h * s.svg.height + "px";
-
-        document.querySelector("#title_info").style.opacity = Math.max(
-          (rate - 0.8) * 5,
-          0
-        );
-      };
-
-      window.addEventListener("scroll", titleResize, {
-        once: false,
-        passive: true
-      });
-      window.addEventListener("resize", titleResize, {
-        once: false,
-        passive: true
-      });
-
-      const colorPicker = document.createElement("input");
-      colorPicker.setAttribute("type", "color");
-      colorPicker.style.position = "absolute";
-      colorPicker.style.top = "0px";
-      colorPicker.style.left = "0px";
-      colorPicker.style.zIndex = "200";
-      colorPicker.style.display = "none";
-      colorPicker.target = undefined;
-
-      colorPicker.addEventListener(
-        "input",
-        () => {
-          if (!colorPicker.target) return;
-
-          colorPicker.target.setAttribute("fill", colorPicker.value);
-        },
-        { once: false, passive: true }
-      );
-
-      colorPicker.addEventListener(
-        "blur",
-        () => {
-          colorPicker.style.display = "none";
-          console.log("blur");
-        },
-        { once: false, passive: true }
-      );
-
-      colorPicker.addEventListener(
-        "change",
-        () => {
-          colorPicker.style.display = "none";
-          console.log("change");
-        },
-        { once: false, passive: true }
-      );
-
-      document.body.appendChild(colorPicker);
-
-      document.querySelectorAll(".color").forEach(element => {
-        element.addEventListener(
-          "click",
-          mouseEvent => {
-            if (!document.querySelector("#colorEdit").checked) return;
-
-            colorPicker.target = element;
-            colorPicker.style.top = mouseEvent.pageY + 20 + "px";
-            colorPicker.style.left = mouseEvent.pageX + 20 + "px";
-            colorPicker.style.display = "block";
-            colorPicker.value =
-              element.getAttribute("fill") ||
-              element.parentElement.getAttribute("fill") ||
-              element.parentElement.parentElement.getAttribute("fill");
-            colorPicker.focus();
-            setTimeout(() => colorPicker.click(), 10);
-          },
-          { once: false, passive: true }
-        );
-      });
-
-      document.querySelector("#colorEdit").addEventListener(
-        "change",
-        event => {
-          const a = document.querySelector("#logoA");
-          if (event.target.checked) {
-            a.removeAttribute("href");
-          } else {
-            a.setAttribute("href", "/");
-          }
-        },
-        { once: false, passive: true }
-      );
-    }
+    window.addEventListener("load", this.windowLoad, {
+      once: true,
+      passive: true
+    });
+    window.addEventListener("scroll", this.titleResize, {
+      once: false,
+      passive: true
+    });
+    window.addEventListener("resize", this.titleResize, {
+      once: false,
+      passive: true
+    });
 
     dispatchEvent(new PopStateEvent("popstate", {}));
+  },
+  destroyed: function() {
+    window.removeEventListener("load", this.windowLoad, {
+      once: true,
+      passive: true
+    });
+    window.removeEventListener("scroll", this.titleResize, {
+      once: false,
+      passive: true
+    });
+    window.removeEventListener("resize", this.titleResize, {
+      once: false,
+      passive: true
+    });
   }
 };
 </script>
