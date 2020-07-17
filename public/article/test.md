@@ -6,6 +6,8 @@
 
 # GitHub Pagesに自動デプロイ
 
-gg-pagesを使わない
+gh-pagesを使わない
 npm run build
+
+git actionsでdeployする
 
