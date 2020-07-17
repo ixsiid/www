@@ -26,7 +26,8 @@ const articles = fs.readdirSync(path.join(__dirname, 'public', 'article'))
 		}
 
 		return result;
-	});
+	})
+	.sort((a,b) => new Date(b.Date) - new Date(a.Date));
 
 module.exports = {
 	outputDir: path.resolve(__dirname, 'docs'),

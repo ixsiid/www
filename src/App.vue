@@ -138,6 +138,8 @@ export default {
       }
     });
 
+    window.$app = this;
+ 
     window.addEventListener("load", this.windowLoad, {
       once: true,
       passive: true
@@ -177,6 +179,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+html {
+ overflow-y: scroll;
 }
 
 body {

@@ -2,7 +2,7 @@
   <div>
     <div class="profile">
       <p>Name</p>
-      <p>IXSIID(仮)</p>
+      <p>~チルダ</p>
       <p>Web</p>
       <p>https://www.halzion.net</p>
     </div>
@@ -10,6 +10,12 @@
       <li><a href="https://twitter.com/ixsiid"><img src="/image/Twitter_Social_Icon_Square_Color.png" alt="Twitter" /></a></li>
       <li><a href="https://github.com/ixsiid"><img src="/image/GitHub-Mark-120px-plus.png" alt="GitHub" /></a></li>
       <li><a href="https://qiita.com/ixsiid"><img src="/image/qiita_favicon.png" alt="Qiita" /></a></li>
+      <li><a href="https://www.halzion.net"><img src="/favicon.svg" alt="" />ニコニコ</a></li>
+      <li><a href="https://www.halzion.net"><img src="/favicon.svg" alt="" />はてブロ</a></li>
+      <li><a href="https://www.halzion.net"><img src="/favicon.svg" alt="" />グラブル</a></li>
+      <li><a href="https://www.halzion.net"><img src="/favicon.svg" alt="" />Steam</a></li>
+      <li><a href="https://www.halzion.net"><img src="/favicon.svg" alt="" />PSオンライン</a></li>
+      <li><a href="https://www.halzion.net"><img src="/favicon.svg" alt="" />ニンテンドーオンライン</a></li>
     </ul>
   </div>
 </template>
