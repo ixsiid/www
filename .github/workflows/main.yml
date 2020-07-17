@@ -43,6 +43,7 @@ jobs:
         git config user.name ixsiid
         git config user.email ixsiid@halzion.net
         git remote set-url origin https://ixsiid:${{ secrets.GITHUB_PASS }}@github.com/ixsiid/www.git
+        git fetch
         git checkout master
         git add docs/*
         git commit -m "deploy"
