@@ -15,3 +15,5 @@ npm run build
 したのを
 git add, commit, push
 を自動的にする
+
+CIサーバでのgitをセットアップしないとだめぴょん
