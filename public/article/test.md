@@ -7,7 +7,11 @@
 # GitHub Pagesに自動デプロイ
 
 gh-pagesを使わない
-npm run build
 
 git actionsでdeployする
 
+npm run build
+でdocsフォルダーに生成されるように設定しているので
+したのを
+git add, commit, push
+を自動的にする
