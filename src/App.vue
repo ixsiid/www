@@ -185,6 +185,20 @@ html {
  overflow-y: scroll;
 }
 
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ccc;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 6px;
+}
+
 body {
   margin: 0;
 }

@@ -5,17 +5,17 @@
       <p>~チルダ</p>
       <p>Web</p>
       <p>https://www.halzion.net</p>
+      <p></p>
+      <p>ixsiid &#x1f4e7; halzion.net</p>
     </div>
     <ul class="sites">
       <li><a href="https://twitter.com/ixsiid"><img src="/image/Twitter_Social_Icon_Square_Color.png" alt="Twitter" /></a></li>
       <li><a href="https://github.com/ixsiid"><img src="/image/GitHub-Mark-120px-plus.png" alt="GitHub" /></a></li>
       <li><a href="https://qiita.com/ixsiid"><img src="/image/qiita_favicon.png" alt="Qiita" /></a></li>
-      <li><a href="https://www.halzion.net"><img src="/favicon.svg" alt="" />ニコニコ</a></li>
-      <li><a href="https://www.halzion.net"><img src="/favicon.svg" alt="" />はてブロ</a></li>
-      <li><a href="https://www.halzion.net"><img src="/favicon.svg" alt="" />グラブル</a></li>
-      <li><a href="https://www.halzion.net"><img src="/favicon.svg" alt="" />Steam</a></li>
-      <li><a href="https://www.halzion.net"><img src="/favicon.svg" alt="" />PSオンライン</a></li>
-      <li><a href="https://www.halzion.net"><img src="/favicon.svg" alt="" />ニンテンドーオンライン</a></li>
+      <li><a href="https://www.nicovideo.jp/user/989333"><img src="/image/niconico_ogp.png" alt="ニコニコ" /></a></li>
+      <li><a href="http://ixsi.hateblo.jp/"><img src="/image/hateblo_meta-icon-global.png" alt="はてブロ" /></a></li>
+      <li><a href="https://steamcommunity.com/profiles/76561198364824598/"><img src="/image/steam_favicon.ico" alt="Steam" /></a></li>
+      <li><a href="https://my.playstation.com/profile/HuukaJP"><img src="/image/PlayStation_Network_logo.png" alt="PlayStation" /></a></li>
     </ul>
   </div>
 </template>
@@ -60,6 +60,7 @@ export default {
   list-style: none;
   margin: 2em 0 0 0;
   justify-content: center;
+  flex-wrap: wrap;
   padding: 0;
 }
 
@@ -72,5 +73,9 @@ export default {
 .sites img {
   width: 100%;
   border-radius: 50%;
+}
+
+#grablu {
+  border-radius: 14%;
 }
 </style>

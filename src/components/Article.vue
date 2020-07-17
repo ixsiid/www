@@ -94,6 +94,8 @@ export default {
 .article-body {
   display: flex;
   justify-content: center;
+  overflow: hidden;
+  flex-wrap: wrap;
 
   font-family: "Kosugi Maru", sans-serif;
   text-align: initial;
@@ -103,10 +105,11 @@ export default {
 .article-body-right {
   width: calc(50% - 24em);
   margin: 2em;
+  min-width: 10em;
 }
 
 .markdown-body {
-  max-width: 40em;
+  max-width: calc(min(40em, 97%));
 }
 
 #article_list ul {
@@ -134,6 +137,13 @@ export default {
   font-size: 90%;
   font-weight: bold;
   color: #aaa;
+}
+
+@media screen and (max-width: 60em) {
+  .article-body-left,
+  .article-body-right {
+    display: none;
+  }
 }
 </style>
 
