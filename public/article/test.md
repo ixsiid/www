@@ -5,3 +5,6 @@
 -->
 
 # GitHub Pagesに自動デプロイ
+
+npm run build
+
