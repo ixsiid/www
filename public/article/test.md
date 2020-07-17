@@ -6,5 +6,6 @@
 
 # GitHub Pagesに自動デプロイ
 
+gg-pagesを使わない
 npm run build
 
