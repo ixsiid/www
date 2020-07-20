@@ -58,7 +58,10 @@ export default {
       articlePath: "",
       isColorEdit: false,
 
-      scrollParam: {}
+      scrollParam: {},
+
+      count: 0,
+      abort: false,
     };
   },
   methods: {
@@ -184,7 +187,6 @@ export default {
 html {
  overflow-y: scroll;
 }
-
 
 ::-webkit-scrollbar {
   width: 12px;

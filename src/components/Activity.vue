@@ -1,69 +1,88 @@
 <template>
-  <div id="activity">
-    <VueMarkdown :source="source" />
+  <div>
+    <Loading v-if="loading" :count="fetch_count" :abort="fetch_count > 4" />
+    <VueMarkdown v-else :source="source" />
   </div>
 </template>
 
 <script>
 import VueMarkdown from "vue-markdown";
+import Loading from './Loading.vue';
 
 export default {
-  name: 'Article',
-  props: {
-    src: String,
-  },
-  data : () => ({
-    source: '# Loading',
-  }),
+  name: "Article",
   components: {
+    Loading,
     VueMarkdown
   },
-  mounted: function () {
-    fetch(this.src)
-    .then(res => res.text())
-    .then(text => this.source = text)
-    .catch(console.error);
+  props: {
+    src: String
   },
+  data: () => ({
+    source: "",
+    fetch_count: 0,
+    loading: false
+  }),
+  methods: {
+    getArticle: function() {
+      this.loading = true;
+      this.fetch_count++;
+      if (this.fetch_count > 4) return;
+
+      fetch(this.src)
+        .then(res => res.text())
+        .then(text => {
+          this.source = text;
+          this.loading = false;
+          this.fetch_count = 0;
+        })
+        .catch(err => {
+          this.getArticle();
+          console.warn(err);
+        });
+    }
+  },
+  mounted: function() { this.getArticle(); }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-#activity * {
-  font-family: 'Kosugi Maru', sans-serif;
+<style scoped>
+>>> * {
+  font-family: "Kosugi Maru", sans-serif;
 }
 
-#activity a {
+>>> a {
   text-decoration: none;
   color: black;
 }
 
-#activity h1 {
+>>> h1 {
   border-bottom: 1px solid #ccc;
   max-width: 90%;
   margin: 0.3ex auto;
   color: #777;
   font-size: 1.5em;
-  font-family: 'Poiret One', cursive;
+  font-family: "Poiret One", cursive;
 }
 
-#activity h2,
-#activity h3,
-#activity h4,
-#activity h5,
-#activity h6 {
-  font-family: 'Comfortaa', cursive;
+>>> h2,
+>>> h3,
+>>> h4,
+>>> h5,
+>>> h6 {
+  font-family: "Comfortaa", cursive;
 }
 
-#activity * + h1 {
+>>> * + h1 {
   margin-top: 2em;
 }
 
-#activity h2 {
+>>> h2 {
   font-size: 1.3em;
 }
 
-#activity a:after {
+>>> a:after {
   content: url(/image/Link_16x.svg);
   display: inline-block;
   width: 1em;
@@ -72,7 +91,7 @@ export default {
   margin-left: 0.3em;
 }
 
-#activity ul {
+>>> ul {
   list-style: none;
   padding: 0;
 }
