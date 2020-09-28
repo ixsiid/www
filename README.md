@@ -19,27 +19,17 @@ npm run serve
 
 確認が完了したらビルドしてPush、Github上でマージしたら反映されます。
 
-# 
+# 記事を作成・編集中に他の更新があったら
 
-## Project setup
-```
-npm install
-```
+記事の作成を途中で止めて、別の記事をmasterにマージすると、作成中だった記事には当然反映されません。
+なので、masterをリベースしましょう。
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
+``` git
+git checkout master
+git pull
+git checkout article/もともと編集だった記事
+git rebase master
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+コンフリクトが発生すると大変なので、めんどくさがらずにやりましょう。
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
