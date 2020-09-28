@@ -13,4 +13,8 @@ export default [{
 	title: "ポートフォリオサイトを公開",
 	description: "しました",
 	date: "2020-07-14",
+}, {
+	title: "F0推定VSTプラグインTrail",
+	description: "V1.0.0をリリースしました",
+	date: "2020-09-28",
 }];
