@@ -10,7 +10,14 @@ git checkout -b article/記事タイトル
 git push -u origin article/記事タイトル
 ```
 
-記事を作成したのちPush、Github上でマージしたら反映されます。
+public/articleフォルダ内に記事を作成する。
+ローカルサーバを立てて内容確認
+
+``` bash
+npm run serve
+```
+
+確認が完了したらビルドしてPush、Github上でマージしたら反映されます。
 
 # 
 
